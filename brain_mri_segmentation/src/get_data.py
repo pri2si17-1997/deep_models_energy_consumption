@@ -13,7 +13,7 @@ def has_mask(mask_path):
     else:
         return 0
 
-DATASET_PATH = os.path.abspath('./dataset/lgg-mri-segmentation/kaggle_3m/')
+DATASET_PATH = os.path.abspath('../dataset/lgg-mri-segmentation/kaggle_3m/')
 
 def get_data():
     #data = pd.read_csv(os.path.join(DATASET_PATH + '/data.csv'))

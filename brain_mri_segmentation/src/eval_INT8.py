@@ -20,7 +20,6 @@ def eval_tflite(interpreter, test_data, n):
     interpreter.allocate_tensors()
     for x, y in test_data:
         x_img = x.astype(input_details["dtype"])
-        print(x_img.dtype)
         interpreter.set_tensor(input_details['index'], x_img)
         interpreter.invoke()
         output_data = interpreter.get_tensor(output_details[0]['index'])

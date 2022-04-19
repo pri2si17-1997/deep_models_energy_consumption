@@ -17,7 +17,7 @@ seg_model.compile(optimizer = adam,
                  )
 
 # Change QAT weights here
-seg_model.load_weights('./weights/ResUNet-segModel-weights.hdf5')
+seg_model.load_weights('../weights/ResUNet-segModel-weights.hdf5')
 
 # Evaluaute model.
 test_ids = list(X_test.image_path)
