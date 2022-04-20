@@ -1,7 +1,6 @@
 import os
 
 from get_data import *
-from metrics import MultipleClassAUROC
 import tensorflow as tf
 import tensorflow.keras.backend as K
 
