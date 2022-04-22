@@ -7,6 +7,10 @@ from model import *
 from utils import *
 import numpy as np
 
+import os
+
+print(f"PID : {os.getpid()}")
+
 IMG_ROWS, IMG_COLS = 80, 112
 K.set_image_data_format('channels_last')
 
@@ -20,7 +24,7 @@ print('-' * 30)
 print('Loading and preprocessing test data...')
 print('-' * 30)
 imgs_test = load_test_data()
-imgs_test = preprocess(imgs_test)
+imgs_test = preprocess(imgs_test, IMG_ROWS, IMG_COLS)
 
 imgs_test = imgs_test.astype('float32')
 imgs_test -= mean
@@ -29,7 +33,7 @@ imgs_test /= std
 print('-' * 30)
 print('Loading saved weights...')
 print('-' * 30)
-q_aware_unet_model.load_weights('../weights/QAT_INT8_Nerve_Segmentation.tflite')
+q_aware_unet_model.load_weights('../weights/FP_32_QAT_Nerve_Segmentation.h5')
 
 print('-' * 30)
 print('Predicting masks on test data...')
@@ -37,7 +41,8 @@ print('-' * 30)
 
 count = 0
 while True:
-    q_aware_unet_model.predict(imgs_test, verbose=1)
+    prediction = q_aware_unet_model.predict(imgs_test, verbose=1)
+    print(f"Prediction : {prediction}")
     count += 1
 
     if count == 100000:
