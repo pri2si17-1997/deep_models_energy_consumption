@@ -43,6 +43,7 @@ def eval_int8_edge_tpu(test_data, n):
 
 
 if __name__ == "__main__":
+    print(f"PID : {os.getpid()}")
     _, _, X_test = get_data.get_data()
 
     test_ids = list(X_test.image_path)
@@ -50,11 +51,23 @@ if __name__ == "__main__":
     test_data = DataGenerator(test_ids, test_mask)
     
     if int(sys.argv[1]) == 0:
-        int8_dice_score = eval_int8(test_data, len(test_data))
-        print(f"Dice Score for INT8 Model : {int8_dice_score}")
+        print(f"Evaluating INT 8 Model.")
+        count = 0
+        while True:
+            int8_dice_score = eval_int8(test_data, len(test_data))
+            print(f"Dice Score for INT8 Model : {int8_dice_score}")
+            count += 1
+            if count == 100000:
+                break
     elif int(sys.argv[1]) == 1:
-        try:
-            int8_dice_score_edge = eval_int8_edge_tpu(test_data, len(test_data))
-            print(f"Dice Score for INT8 Model on edge TPU: {int8_dice_score_edge}")
-        except Exception as ex:
-            print(f"Not supported edge TPU found.") 
+        print(f"Edge TPU Compiled INT 8 Model")
+        count = 0
+        while True:
+            try:
+                int8_dice_score_edge = eval_int8_edge_tpu(test_data, len(test_data))
+                print(f"Dice Score for INT8 Model on edge TPU: {int8_dice_score_edge}")
+                count += 1
+                if count == 100000:
+                    break
+            except Exception as ex:
+                print(f"Not supported edge TPU found.") 

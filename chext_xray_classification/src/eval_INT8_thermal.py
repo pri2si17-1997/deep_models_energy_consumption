@@ -37,6 +37,7 @@ def eval_int8_edge_tpu(test_data, n):
 
 
 if __name__ == "__main__":
+    print(f"PID : {os.getpid()}")
     DATASET_PATH = os.path.abspath('/data/NIH_14')
 
     data, all_labels = get_data(DATASET_PATH)

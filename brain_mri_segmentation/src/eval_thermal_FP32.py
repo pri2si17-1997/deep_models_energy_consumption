@@ -5,6 +5,8 @@ from data_generator import DataGenerator
 import os
 import tensorflow as tf
 
+print(f"PID : {os.getpid()}")
+
 _, _, X_test = get_data.get_data()
 
 seg_model = get_model()
@@ -23,7 +25,12 @@ seg_model.load_weights('../weights/ResUNet-segModel-weights.hdf5')
 test_ids = list(X_test.image_path)
 test_mask = list(X_test.mask_path)
 test_data = DataGenerator(test_ids, test_mask)
-_, tv, dice = seg_model.evaluate(test_data)
 
-print("Segmentation tversky is {:.2f}%".format(tv*100))
-print("Segmentation Dice is {:.2f}".format(dice))
+count = 0
+while True:
+    _, tv, dice = seg_model.evaluate(test_data)
+    print("Segmentation tversky is {:.2f}%".format(tv*100))
+    print("Segmentation Dice is {:.2f}".format(dice))
+    count += 1
+    if count == 100000:
+        break

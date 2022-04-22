@@ -9,6 +9,8 @@ from sklearn.metrics import roc_curve, auc
 
 import tensorflow_model_optimization as tfmot
 
+print(f"PID : {os.getpid()}")
+
 quantize_annotate_layer = tfmot.quantization.keras.quantize_annotate_layer
 quantize_annotate_model = tfmot.quantization.keras.quantize_annotate_model
 quantize_scope = tfmot.quantization.keras.quantize_scope
